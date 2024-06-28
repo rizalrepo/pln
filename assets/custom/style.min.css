@@ -1,0 +1,21 @@
+#template-customizer {
+    display: none !important;
+}
+
+#example thead tr th {
+    color: #fff !important;
+    background-color: #656bfd !important;
+    text-align: center !important;
+    font-size: 15px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    vertical-align: middle;
+}
+
+div.dt-container div.dt-search input {
+    margin-bottom: 0.5em !important;
+}
+
+.select2-container.is-invalid .select2-selection {
+    border-color: #dc3545;
+}
