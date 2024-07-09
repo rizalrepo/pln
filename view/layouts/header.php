@@ -119,11 +119,12 @@ if (!isset($_SESSION['login'])) {
                                 </ul>
                             </li>
                             <!-- / Style Switcher-->
-                            |
                             <!-- User -->
-                            <li class="nav-item navbar-dropdown dropdown-user dropdown ms-2 ms-lg-1">
+                            <li class="nav-item navbar-dropdown dropdown-user dropdown">
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
-                                    <i class="ri-shut-down-line ri-24px"></i>
+                                    <div class="avatar avatar-online">
+                                        <img src="<?= base_url() ?>/assets/img/avatars/1.png" alt="" class="rounded-circle">
+                                    </div>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
                                     <li>
