@@ -37,6 +37,8 @@ if (isset($_GET['id'])) {
                             </div>
                         </div>
                     </dd>
+                    <dt class="col-sm-2">Area Pengaduan</dt>
+                    <dd class="col-sm-10"><span class="mx-2">:</span><?= $d['area'] ?></dd>
                     <dt class="col-sm-2">Waktu Pengaduan</dt>
                     <dd class="col-sm-10"><span class="mx-2">:</span><?= tglWaktu($d['waktu_pengaduan']) ?></dd>
                     <dt class="col-sm-2">Status Pengaduan</dt>

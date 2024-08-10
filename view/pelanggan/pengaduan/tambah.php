@@ -39,7 +39,7 @@ $post_data = get_form_data();
                     </div>
                 </div>
                 <div class="row mb-4">
-                    <label class="col-sm-2 col-form-label">Area Pemasangan</label>
+                    <label class="col-sm-2 col-form-label">Area Pengaduan</label>
                     <div class="col-sm-10">
                         <select name="id_gardu" class="form-select select2" required>
                             <option value="">-- Pilih --</option>
