@@ -8,7 +8,7 @@ $row = $con->query("SELECT * FROM user WHERE id_user = '$id'")->fetch_array();
 $level = [
     '' => '-- Pilih --',
     '1' => 'Admin',
-    '2' => 'Direktur',
+    '3' => 'Direktur',
 ];
 ?>
 
@@ -59,7 +59,7 @@ $level = [
                         <small class="text-danger fst-italic">*Kosongkan Password Jika Tidak Diubah</small>
                     </div>
                 </div>
-                <?php if ($row['level'] != 3) { ?>
+                <?php if ($row['level'] != 2) { ?>
                     <div class="row mb-4">
                         <label class="col-sm-2 col-form-label">Level Pengguna</label>
                         <div class="col-sm-10">

@@ -6,7 +6,7 @@ include_once '../../layouts/header.php';
 $level = [
     '' => '-- Pilih --',
     '1' => 'Admin',
-    '2' => 'Direktur',
+    '3' => 'Direktur',
 ];
 ?>
 

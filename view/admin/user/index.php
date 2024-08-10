@@ -52,15 +52,15 @@ include_once '../../layouts/header.php';
                                     if ($row['level'] == 1) {
                                         echo 'Admin';
                                     } else if ($row['level'] == 2) {
-                                        echo 'Direktur';
-                                    } else if ($row['level'] == 3) {
                                         echo 'Pelanggan';
+                                    } else if ($row['level'] == 3) {
+                                        echo 'Direktur';
                                     }
                                     ?>
                                 </td>
                                 <td align="center" width="14%">
                                     <a href="edit?id=<?= $row[0] ?>" class="btn text-white btn-info btn-xs" title="Edit"><i class="ri-edit-2-line me-2"></i>Edit</a>
-                                    <?php if ($row['level'] != 3) { ?>
+                                    <?php if ($row['level'] != 2) { ?>
                                         <a href="hapus?id=<?= $row[0] ?>" class="btn btn-danger btn-xs confirm-hapus" title="Hapus"><i class="ri-delete-bin-line me-2"></i>Hapus</a>
                                     <?php } ?>
                                 </td>

@@ -186,9 +186,11 @@ if (isset($_POST['submit'])) {
     ");
 
     if ($update) {
+        $pw = md5($nik_pelanggan);
         $con->query("UPDATE user SET
             nm_user = '$nm_pelanggan',
-            username = '$nik_pelanggan'
+            username = '$nik_pelanggan',
+            pw = '$pw'
             WHERE id_pelanggan = '$id' 
         ");
         $_SESSION['pesan'] = "Data Berhasil di Update";

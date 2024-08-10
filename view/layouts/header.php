@@ -219,7 +219,21 @@ if (!isset($_SESSION['login'])) {
                                             </li>
                                         </ul>
                                     </li>
-                                    <li class="menu-header mt-1">
+                                    <li class="menu-item <?= isOpenActive($page, ['pemasangan']) ?>">
+                                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                                            <i class="menu-icon tf-icons ri-customer-service-2-line"></i>
+                                            <div>Data Layanan</div>
+                                        </a>
+                                        <ul class="menu-sub">
+                                            <li class="menu-item <?= isActive($page, 'pemasangan') ?>">
+                                                <a href="<?= base_url() ?>/view/admin/pemasangan" class="menu-link">
+                                                    <i class="menu-icon tf-icons ri-plug-line"></i>
+                                                    <div>Data Pemasangan Baru</div>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- <li class="menu-header mt-1">
                                         <span class="menu-header-text">Laporan</span>
                                     </li>
                                     <li class="menu-item">
@@ -235,31 +249,29 @@ if (!isset($_SESSION['login'])) {
                                                 </a>
                                             </li>
                                         </ul>
-                                    </li>
+                                    </li> -->
                                 <?php } else if ($_SESSION['level'] == 2) { ?>
                                     <li class="menu-item <?= isActive($page, 'dashboard') ?>">
-                                        <a href="<?= base_url() ?>/view/admin" class="menu-link">
+                                        <a href="<?= base_url() ?>/view/pelanggan" class="menu-link">
                                             <i class="menu-icon tf-icons ri-home-smile-line"></i>
                                             <div>Dashboard</div>
                                         </a>
                                     </li>
-                                    <li class="menu-item">
-                                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                                            <i class="menu-icon tf-icons ri-printer-fill"></i>
-                                            <div>Cetak Laporan</div>
+                                    <li class="menu-item <?= isActive($page, 'pemasangan') ?>">
+                                        <a href="<?= base_url() ?>/view/pelanggan/pemasangan" class="menu-link">
+                                            <i class="menu-icon tf-icons ri-plug-line"></i>
+                                            <div>Data Pemasangan Baru</div>
                                         </a>
-                                        <ul class="menu-sub">
-                                            <li class="menu-item">
-                                                <a href="#" class="menu-link" data-bs-toggle="modal" data-bs-target="#lapSample">
-                                                    <i class="menu-icon tf-icons ri-file-text-line"></i>
-                                                    <div>Laporan Sample</div>
-                                                </a>
-                                            </li>
-                                        </ul>
                                     </li>
+                                    <!-- <li class="menu-item <?= isActive($page, 'pengaduan') ?>">
+                                        <a href="<?= base_url() ?>/view/pelanggan/pengaduan" class="menu-link">
+                                            <i class="menu-icon tf-icons ri-chat-follow-up-fill"></i>
+                                            <div>Data Pengaduan</div>
+                                        </a>
+                                    </li> -->
                                 <?php } else if ($_SESSION['level'] == 3) { ?>
                                     <li class="menu-item <?= isActive($page, 'dashboard') ?>">
-                                        <a href="<?= base_url() ?>/view/pelanggan" class="menu-link">
+                                        <a href="<?= base_url() ?>/view/admin" class="menu-link">
                                             <i class="menu-icon tf-icons ri-home-smile-line"></i>
                                             <div>Dashboard</div>
                                         </a>

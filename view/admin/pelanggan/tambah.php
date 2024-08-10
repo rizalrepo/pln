@@ -199,7 +199,7 @@ if (isset($_POST['submit'])) {
                 '$nm_pelanggan',
                 '$nik_pelanggan',
                 '$pw',
-                3
+                2
             )");
             $_SESSION['pesan'] = "Data Berhasil di Simpan";
             echo "<meta http-equiv='refresh' content='0; url=index'>";

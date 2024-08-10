@@ -161,6 +161,7 @@ if (isset($_POST['sign'])) {
     $username = $data['username'];
     $password = $data['password'];
     $id = $data['id_user'];
+    $id_pelanggan = $data['id_pelanggan'];
     $level = $data['level'];
     $usr = $data['nm_user'];
 
@@ -168,15 +169,14 @@ if (isset($_POST['sign'])) {
 
         $_SESSION["login"] = true;
         $_SESSION['id_user'] = $id;
+        $_SESSION['id_pelanggan'] = $id_pelanggan;
         $_SESSION['level'] = $level;
         $_SESSION['nm_user'] = $usr;
         $_SESSION['username'] = $username;
 
-        if ($level == 1) {
+        if ($level == 1 || $level == 3) {
             $url = '../admin/';
         } else if ($level == 2) {
-            $url = '../admin/';
-        } else if ($level == 3) {
             $url = '../pelanggan/';
         }
 
