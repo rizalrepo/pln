@@ -1,6 +1,6 @@
 <?php
 require '../../../app/config.php';
-$page = 'pemasangan';
+$page = 'ubah_daya';
 include_once '../../layouts/header.php';
 ?>
 
@@ -9,7 +9,7 @@ include_once '../../layouts/header.php';
     <div class="card">
         <div class="justify-content-between d-flex align-items-center">
             <h5 class="card-header">
-                <i class="menu-icon tf-icons ri-plug-line me-2"></i>Data Pemasangan Baru
+                <i class="menu-icon tf-icons ri-speed-up-line me-2"></i>Data Ubah Daya
             </h5>
             <div class="pe-5">
                 <a href="tambah" class="btn btn-sm btn-primary"><i class="ri-add-circle-fill me-2"></i>Input Pengajuan</a>
@@ -31,7 +31,7 @@ include_once '../../layouts/header.php';
                     <thead>
                         <tr>
                             <th>No.</th>
-                            <th>No. Pemasangan</th>
+                            <th>No. Ubah Daya</th>
                             <th>Nama</th>
                             <th>NIK</th>
                             <th>Daya</th>
@@ -42,19 +42,24 @@ include_once '../../layouts/header.php';
                     <tbody>
                         <?php
                         $no = 1;
-                        $data = $con->query("SELECT * FROM pemasangan a LEFT JOIN daya b ON a.id_daya = b.id_daya LEFT JOIN gardu c ON a.id_gardu = c.id_gardu LEFT JOIN pelanggan d ON a.id_pelanggan = d.id_pelanggan WHERE a.id_pelanggan = '$_SESSION[id_pelanggan]' ORDER BY id_pemasangan DESC");
+                        $data = $con->query("SELECT * FROM ubah_daya ub LEFT JOIN pemasangan a ON ub.id_pemasangan = a.id_pemasangan LEFT JOIN daya b ON ub.id_daya = b.id_daya LEFT JOIN gardu c ON a.id_gardu = c.id_gardu LEFT JOIN pelanggan d ON a.id_pelanggan = d.id_pelanggan WHERE a.id_pelanggan = '$_SESSION[id_pelanggan]' ORDER BY id_ubah_daya DESC");
                         while ($row = $data->fetch_array()) {
                         ?>
                             <tr>
                                 <td class="text-center" width="5%"><?= $no++ ?></td>
-                                <td class="text-center"><?= $row['no_pemasangan'] ?></td>
+                                <td class="text-center"><?= $row['no_ubah_daya'] ?></td>
                                 <td><?= $row['nm_pelanggan'] ?></td>
                                 <td class="text-center"><?= $row['nik_pelanggan'] ?></td>
-                                <td class="text-center"><?= $row['jenis_daya'] . ' - ' . $row['jml_daya'] ?></td>
                                 <td class="text-center">
-                                    <?php if ($row['verif'] == 1) { ?>
+                                    <?php $old = $con->query("SELECT * FROM daya WHERE id_daya = '$row[id_daya_lama]' ")->fetch_array();  ?>
+                                    <?= $old['jenis_daya'] . ' - ' . $old['jml_daya'] ?>
+                                    <i class="ri-arrow-right-line mx-2"></i>
+                                    <?= $row['jenis_daya'] . ' - ' . $row['jml_daya'] ?>
+                                </td>
+                                <td class="text-center">
+                                    <?php if ($row['verif_ubah_daya'] == 1) { ?>
                                         <span class="badge bg-success">Disetujui</span>
-                                    <?php } else if ($row['verif'] == 2) { ?>
+                                    <?php } else if ($row['verif_ubah_daya'] == 2) { ?>
                                         <span class="badge bg-danger">Ditolak</span>
                                     <?php } else { ?>
                                         <span class="badge bg-warning">Menunggu Verifikasi</span>
@@ -64,7 +69,7 @@ include_once '../../layouts/header.php';
                                     <span class="btn text-white btn-primary btn-xs detail-btn" data-id="<?= $row[0]; ?>" title="Detail">
                                         <i class="ri-information-line me-2"></i>Detail
                                     </span>
-                                    <?php if ($row['verif'] == 0) { ?>
+                                    <?php if ($row['verif_ubah_daya'] == 0) { ?>
                                         <a href="edit?id=<?= $row[0] ?>" class="btn text-white btn-info btn-xs" title="Edit"><i class="ri-edit-2-line me-2"></i>Edit</a>
                                         <a href="hapus?id=<?= $row[0] ?>" class="btn btn-danger btn-xs confirm-hapus" title="Hapus"><i class="ri-delete-bin-line me-2"></i>Hapus</a>
                                     <?php } ?>
@@ -83,7 +88,7 @@ include_once '../../layouts/header.php';
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title"><i class="ri-information-line me-2"></i>Detail Data Pengajuan Pemasangan Baru</h5>
+                <h5 class="modal-title"><i class="ri-information-line me-2"></i>Detail Data Pengajuan Ubah Daya</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" id="modalContent">
@@ -112,7 +117,7 @@ include_once '../../layouts/footer.php';
             }
 
             $.ajax({
-                url: '../../detail/pemasangan.php',
+                url: '../../detail/ubah-daya.php',
                 type: 'GET',
                 data: {
                     id: id

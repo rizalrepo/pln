@@ -4,15 +4,18 @@ require '../../../app/config.php';
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
 
-    $q = $con->query("SELECT * FROM pemasangan a LEFT JOIN daya b ON a.id_daya = b.id_daya LEFT JOIN gardu c ON a.id_gardu = c.id_gardu LEFT JOIN pelanggan d ON a.id_pelanggan = d.id_pelanggan WHERE a.id_pemasangan = '$id'");
+    $q = $con->query("SELECT * FROM ubah_daya ub LEFT JOIN pemasangan a ON ub.id_pemasangan = a.id_pemasangan LEFT JOIN daya b ON ub.id_daya = b.id_daya LEFT JOIN gardu c ON a.id_gardu = c.id_gardu LEFT JOIN pelanggan d ON a.id_pelanggan = d.id_pelanggan WHERE ub.id_ubah_daya = '$id'");
     $d = $q->fetch_array();
+
+    $dataPetugas = $con->query("SELECT * FROM ubah_daya_up3 a LEFT JOIN up3 b ON a.id_up3 = b.id_up3 WHERE a.id_ubah_daya = '$d[0]' ");
+    $old = $con->query("SELECT * FROM ubah_daya a LEFT JOIN daya b ON a.id_daya_lama = b.id_daya LEFT JOIN pemasangan c ON a.id_pemasangan = c.id_pemasangan WHERE a.id_ubah_daya = '$id'")->fetch_array();
 ?>
     <div class="row">
         <div class="col-md-12">
             <div class="form-group">
                 <dl class="row text-start my-3">
-                    <dt class="col-sm-2">Nomor Pemasangan</dt>
-                    <dd class="col-sm-10"><span class="mx-2">:</span><?= $d['no_pemasangan'] ?></dd>
+                    <dt class="col-sm-2">Nomor Ubah Daya</dt>
+                    <dd class="col-sm-10"><span class="mx-2">:</span><?= $d['no_ubah_daya'] ?></dd>
                     <dt class="col-sm-2">Nama Pelanggan</dt>
                     <dd class="col-sm-10"><span class="mx-2">:</span><?= $d['nm_pelanggan'] ?></dd>
                     <dt class="col-sm-2">NIK</dt>
@@ -21,25 +24,29 @@ if (isset($_GET['id'])) {
                     <dd class="col-sm-10"><span class="mx-2">:</span><?= $d['alamat_pelanggan'] ?></dd>
                     <dt class="col-sm-2">Nomor Handphone</dt>
                     <dd class="col-sm-10"><span class="mx-2">:</span><?= $d['hp_pelanggan'] ?></dd>
-                    <dt class="col-sm-2">Daya</dt>
-                    <dd class="col-sm-10"><span class="mx-2">:</span><?= $d['golongan'] . ' | ' . $d['jenis_daya'] . ' - ' . $d['jml_daya'] ?></dd>
-                    <dt class="col-sm-2">Biaya Pasang</dt>
-                    <dd class="col-sm-10"><span class="mx-2">:</span><?= rupiah($d['biaya_pasang']) ?></dd>
-                    <dt class="col-sm-2">Alamat Pemasangan</dt>
+                    <dt class="col-sm-2">Alamat Pengajuan</dt>
                     <dd class="col-sm-10"><span class="mx-2">:</span><?= $d['area'] . ' - ' . $d['alamat_pemasangan'] ?></dd>
+                    <dt class="col-sm-2">Daya Sekarang</dt>
+                    <dd class="col-sm-10"><span class="mx-2">:</span><?= $old['golongan'] . ' | ' . $old['jenis_daya'] . ' - ' . $old['jml_daya'] ?></dd>
+                    <dt class="col-sm-2">Tanggal Pemasangan</dt>
+                    <dd class="col-sm-10"><span class="mx-2">:</span><?= tgl($old['tgl_pemasangan']) ?></dd>
+                    <dt class="col-sm-2">Pengajuan Ubah Daya</dt>
+                    <dd class="col-sm-10"><span class="mx-2">:</span><?= $d['golongan'] . ' | ' . $d['jenis_daya'] . ' - ' . $d['jml_daya'] ?></dd>
+                    <dt class="col-sm-2">Biaya Ubah Daya</dt>
+                    <dd class="col-sm-10"><span class="mx-2">:</span><?= rupiah($d['biaya_ubah_daya']) ?></dd>
                     <dt class="col-sm-2">Waktu Pengajuan</dt>
-                    <dd class="col-sm-10"><span class="mx-2">:</span><?= tglWaktu($d['waktu_pengajuan']) ?></dd>
+                    <dd class="col-sm-10"><span class="mx-2">:</span><?= tglWaktu($d['waktu_pengajuan_ubah_daya']) ?></dd>
                 </dl>
 
                 <hr class="mt-1 mb-5">
 
                 <form class="needs-validation" id="form-tolak" method="POST" novalidate action="verif.php">
-                    <input type="hidden" name="id_pemasangan" value="<?= $id ?>">
-                    <input type="hidden" name="verif" value="2">
+                    <input type="hidden" name="id_ubah_daya" value="<?= $id ?>">
+                    <input type="hidden" name="verif_ubah_daya" value="2">
                     <div class="row mb-4">
-                        <label class="col-sm-2 col-form-label">Alasan Pengajuan Ditolak</label>
+                        <label class="col-sm-2 col-form-label">Alasan Ubah Daya Ditolak</label>
                         <div class="col-sm-10">
-                            <textarea class="form-control" name="pesan_ditolak" required><?= $d['pesan_ditolak'] ?></textarea>
+                            <textarea class="form-control" name="ubah_daya_ditolak" required><?= $d['ubah_daya_ditolak'] ?></textarea>
                             <div class="invalid-feedback">Kolom tidak boleh kosong !</div>
                         </div>
                     </div>
@@ -55,7 +62,9 @@ if (isset($_GET['id'])) {
             </div>
         </div>
     </div>
-<?php } ?>
+<?php
+}
+?>
 
 <script>
     $('#form-tolak').on('submit', function(e) {

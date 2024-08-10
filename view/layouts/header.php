@@ -219,7 +219,7 @@ if (!isset($_SESSION['login'])) {
                                             </li>
                                         </ul>
                                     </li>
-                                    <li class="menu-item <?= isOpenActive($page, ['pemasangan']) ?>">
+                                    <li class="menu-item <?= isOpenActive($page, ['pemasangan', 'ubah_daya']) ?>">
                                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                                             <i class="menu-icon tf-icons ri-customer-service-2-line"></i>
                                             <div>Data Layanan</div>
@@ -229,6 +229,12 @@ if (!isset($_SESSION['login'])) {
                                                 <a href="<?= base_url() ?>/view/admin/pemasangan" class="menu-link">
                                                     <i class="menu-icon tf-icons ri-plug-line"></i>
                                                     <div>Data Pemasangan Baru</div>
+                                                </a>
+                                            </li>
+                                            <li class="menu-item <?= isActive($page, 'ubah_daya') ?>">
+                                                <a href="<?= base_url() ?>/view/admin/ubah-daya" class="menu-link">
+                                                    <i class="menu-icon tf-icons ri-speed-up-line"></i>
+                                                    <div>Data Ubah Daya</div>
                                                 </a>
                                             </li>
                                         </ul>
@@ -261,6 +267,12 @@ if (!isset($_SESSION['login'])) {
                                         <a href="<?= base_url() ?>/view/pelanggan/pemasangan" class="menu-link">
                                             <i class="menu-icon tf-icons ri-plug-line"></i>
                                             <div>Data Pemasangan Baru</div>
+                                        </a>
+                                    </li>
+                                    <li class="menu-item <?= isActive($page, 'ubah_daya') ?>">
+                                        <a href="<?= base_url() ?>/view/pelanggan/ubah-daya" class="menu-link">
+                                            <i class="menu-icon tf-icons ri-speed-up-line"></i>
+                                            <div>Data Ubah Daya</div>
                                         </a>
                                     </li>
                                     <!-- <li class="menu-item <?= isActive($page, 'pengaduan') ?>">
