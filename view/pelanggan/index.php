@@ -64,7 +64,7 @@ $c2 = $con->query("SELECT COUNT(*) AS total FROM pengaduan WHERE status_pengadua
                 </div>
             </div>
         </div>
-        <!-- <div class="col-12">
+        <div class="col-12">
             <div class="card card-border-shadow-info">
                 <div class="card-body">
                     <div class="d-flex align-items-center gap-4 me-6 me-sm-0">
@@ -82,7 +82,7 @@ $c2 = $con->query("SELECT COUNT(*) AS total FROM pengaduan WHERE status_pengadua
                     </div>
                 </div>
             </div>
-        </div> -->
+        </div>
     </div>
     <!--/ On route vehicles Table -->
 </div>

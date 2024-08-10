@@ -2,7 +2,8 @@
     display: none !important;
 }
 
-#example thead tr th {
+#example thead tr th,
+#tbl thead tr th {
     color: #fff !important;
     background-color: #656bfd !important;
     text-align: center !important;

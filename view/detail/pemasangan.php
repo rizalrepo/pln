@@ -74,8 +74,8 @@ if (isset($_GET['id'])) {
                     <?php foreach ($ubah_daya as $ud):
                         $old = $con->query("SELECT * FROM ubah_daya a LEFT JOIN daya b ON a.id_daya_lama = b.id_daya LEFT JOIN pemasangan c ON a.id_pemasangan = c.id_pemasangan WHERE a.id_ubah_daya = '$ud[id_ubah_daya]'")->fetch_array();
                     ?>
-                        <div class="alert alert-primary text-white mb-3" role="alert">
-                            <h6 class="alert-heading d-flex align-items-center"><span class="alert-icon rounded"><i class="ri-speed-up-line"></i></span><?= tgl($ud['tgl_ubah_daya']) ?></h6>
+                        <div class="alert bg-primary text-white mb-3" role="alert">
+                            <h6 class="alert-heading d-flex align-items-center"><span class="alert-icon bg-info rounded"><i class="ri-speed-up-line"></i></span><?= tgl($ud['tgl_ubah_daya']) ?></h6>
                             <dl class="row text-start my-1">
                                 <dt class="col-sm-2">Nomor Ubah Daya</dt>
                                 <dd class="col-sm-10"><span class="mx-2">:</span><?= $ud['no_ubah_daya'] ?></dd>
