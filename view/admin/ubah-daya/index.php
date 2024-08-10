@@ -12,7 +12,6 @@ include_once '../../layouts/header.php';
                 <i class="menu-icon tf-icons ri-speed-up-line me-2"></i>Data Ubah Daya
             </h5>
             <div class="pe-5">
-                <a href="tambah" class="btn btn-sm btn-primary"><i class="ri-add-circle-fill me-2"></i>Input Pengajuan</a>
             </div>
         </div>
         <hr class="my-0">

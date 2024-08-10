@@ -60,7 +60,7 @@ if (isset($_GET['id'])) {
                                 <?= nl2br($tg['pesan_tanggapan']) ?>
                                 <?php if ($tg['bukti_tanggapan']) : ?>
                                     <br>
-                                    <a href="<?= base_url('storage/pengaduan/' . $tg['bukti_tanggapan']) ?>" class="btn btn-sm btn-success mt-2 p-1" target="_blank"><i class="ri-folder-user-line me-1"></i>Lihat Bukti Tanggapan</a>
+                                    <a href="<?= base_url('storage/tanggapan/' . $tg['bukti_tanggapan']) ?>" class="btn btn-sm btn-success mt-2 p-1" target="_blank"><i class="ri-folder-user-line me-1"></i>Lihat Bukti Tanggapan</a>
                                 <?php endif ?>
                             </p>
                         </div>
