@@ -219,7 +219,7 @@ if (!isset($_SESSION['login'])) {
                                             </li>
                                         </ul>
                                     </li>
-                                    <li class="menu-item <?= isOpenActive($page, ['pemasangan', 'ubah_daya', 'pengaduan']) ?>">
+                                    <li class="menu-item <?= isOpenActive($page, ['pemasangan', 'ubah_daya', 'pengaduan', 'kerusakan', 'perbaikan', 'maintenance']) ?>">
                                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                                             <i class="menu-icon tf-icons ri-customer-service-2-line"></i>
                                             <div>Data Layanan</div>
@@ -241,6 +241,18 @@ if (!isset($_SESSION['login'])) {
                                                 <a href="<?= base_url() ?>/view/admin/pengaduan" class="menu-link">
                                                     <i class="menu-icon tf-icons ri-chat-follow-up-fill"></i>
                                                     <div>Data Pengaduan</div>
+                                                </a>
+                                            </li>
+                                            <li class="menu-item <?= isActive($page, 'kerusakan') ?>">
+                                                <a href="<?= base_url() ?>/view/admin/kerusakan" class="menu-link">
+                                                    <i class="menu-icon tf-icons ri-alarm-warning-fill"></i>
+                                                    <div>Data Kerusakan</div>
+                                                </a>
+                                            </li>
+                                            <li class="menu-item <?= isActive($page, 'perbaikan') ?>">
+                                                <a href="<?= base_url() ?>/view/admin/perbaikan" class="menu-link">
+                                                    <i class="menu-icon tf-icons ri-shield-check-fill"></i>
+                                                    <div>Data Perbaikan</div>
                                                 </a>
                                             </li>
                                         </ul>
@@ -285,6 +297,12 @@ if (!isset($_SESSION['login'])) {
                                         <a href="<?= base_url() ?>/view/pelanggan/pengaduan" class="menu-link">
                                             <i class="menu-icon tf-icons ri-chat-follow-up-fill"></i>
                                             <div>Data Pengaduan</div>
+                                        </a>
+                                    </li>
+                                    <li class="menu-item <?= isActive($page, 'kerusakan') ?>">
+                                        <a href="<?= base_url() ?>/view/pelanggan/kerusakan" class="menu-link">
+                                            <i class="menu-icon tf-icons ri-alarm-warning-fill"></i>
+                                            <div>Data Kerusakan</div>
                                         </a>
                                     </li>
                                 <?php } else if ($_SESSION['level'] == 3) { ?>

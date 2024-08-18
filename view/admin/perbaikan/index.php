@@ -1,6 +1,6 @@
 <?php
 require '../../../app/config.php';
-$page = 'pengaduan';
+$page = 'perbaikan';
 include_once '../../layouts/header.php';
 ?>
 
@@ -9,10 +9,10 @@ include_once '../../layouts/header.php';
     <div class="card">
         <div class="justify-content-between d-flex align-items-center">
             <h5 class="card-header">
-                <i class="menu-icon tf-icons ri-chat-follow-up-line me-2"></i>Data Pengaduan
+                <i class="menu-icon tf-icons ri-shield-check-line me-2"></i>Data Perbaikan
             </h5>
             <div class="pe-5">
-                <a href="tambah" class="btn btn-sm btn-primary"><i class="ri-add-circle-fill me-2"></i>Tambah Data</a>
+
             </div>
         </div>
         <hr class="my-0">
@@ -42,33 +42,29 @@ include_once '../../layouts/header.php';
                     <tbody>
                         <?php
                         $no = 1;
-                        $data = $con->query("SELECT * FROM pengaduan a LEFT JOIN pelanggan b ON a.id_pelanggan = b.id_pelanggan LEFT JOIN gardu c ON a.id_gardu = c.id_gardu WHERE a.id_pelanggan = '$_SESSION[id_pelanggan]' ORDER BY id_pengaduan DESC");
-                        while ($row = $data->fetch_array()) {
-
-                            $jmlTanggapan = $con->query("SELECT COUNT(*) AS total FROM tanggapan WHERE id_pengaduan = '$row[0]' ")->fetch_array();
-                        ?>
+                        $data = $con->query("SELECT * FROM kerusakan a LEFT JOIN pelanggan b ON a.id_pelanggan = b.id_pelanggan LEFT JOIN gardu c ON a.id_gardu = c.id_gardu WHERE a.verif = 1 ORDER BY id_kerusakan DESC");
+                        while ($row = $data->fetch_array()) { ?>
                             <tr>
                                 <td class="text-center" width="5%"><?= $no++ ?></td>
                                 <td><?= $row['nm_pelanggan'] ?></td>
                                 <td class="text-center"><?= $row['nik_pelanggan'] ?></td>
                                 <td class="text-center"><?= $row['area'] ?></td>
-                                <td><?= nl2br($row['pesan_pengaduan']) ?></td>
+                                <td><?= nl2br($row['pesan_kerusakan']) ?></td>
                                 <td class="text-center">
-                                    <?php if ($row['status_pengaduan'] == 1) { ?>
-                                        <span class="badge bg-success">Sudah Ditanggapi</span>
-                                        <br>
-                                        <small class="fw-semibold">Jumlah Tanggapan : <?= $jmlTanggapan['total']; ?> Data</small>
+                                    <?php if ($row['status_kerusakan'] == 1) { ?>
+                                        <span class="badge bg-success">Diperbaiki</span>
                                     <?php } else { ?>
-                                        <span class="badge bg-warning">Belum Ditanggapi</span>
+                                        <span class="badge bg-info">Menunggu Perbaikan</span>
                                     <?php } ?>
                                 </td>
                                 <td align="center" width="14%">
                                     <span class="btn text-white btn-primary btn-xs detail-btn" data-id="<?= $row[0]; ?>" title="Detail">
                                         <i class="ri-information-line me-2"></i>Detail
                                     </span>
-                                    <?php if ($row['status_pengaduan'] == 0) : ?>
-                                        <a href="edit?id=<?= $row[0] ?>" class="btn text-white btn-info btn-xs" title="Edit"><i class="ri-edit-2-line me-2"></i>Edit</a>
-                                        <a href="hapus?id=<?= $row[0] ?>" class="btn btn-danger btn-xs confirm-hapus" title="Hapus"><i class="ri-delete-bin-line me-2"></i> Hapus</a>
+                                    <a href="proses?id=<?= $row[0] ?>" class="btn text-white btn-info btn-xs" title="Edit"><i class="ri-shield-check-line me-2"></i>Perbaikan</a>
+                                    <?php $cek = $con->query("SELECT * FROM perbaikan WHERE id_kerusakan = '$row[0]' ")->fetch_array(); ?>
+                                    <?php if ($row['status_kerusakan'] == 0 && $cek) : ?>
+                                        <a href="selesai?id=<?= $row[0] ?>" class="btn btn-success btn-xs confirm-selesai" title="Selesai"><i class="ri-checkbox-circle-line me-2"></i>Perbaikan Selesai</a>
                                     <?php endif ?>
                                 </td>
                             </tr>
@@ -85,10 +81,24 @@ include_once '../../layouts/header.php';
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title"><i class="ri-information-line me-2"></i>Detail Data Pengaduan</h5>
+                <h5 class="modal-title"><i class="ri-information-line me-2"></i>Detail Data Laporan Kerusakan</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" id="modalContent">
+                <!-- Konten akan diisi oleh JavaScript -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="verifModal" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><span id="titleModal"></span> Laporan Kerusakan</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modalContentVerif">
                 <!-- Konten akan diisi oleh JavaScript -->
             </div>
         </div>
@@ -114,7 +124,7 @@ include_once '../../layouts/footer.php';
             }
 
             $.ajax({
-                url: '../../detail/pengaduan.php',
+                url: '../../detail/kerusakan.php',
                 type: 'GET',
                 data: {
                     id: id
@@ -129,5 +139,26 @@ include_once '../../layouts/footer.php';
                 }
             });
         });
+    });
+
+    $(document).on("click", "#example .confirm-selesai", function() {
+        var getLink = $(this).attr("href");
+        Swal.fire({
+            title: "Konfirmasi !",
+            text: "Perbaikan kerusakan telah Selesai, Lanjutkan ?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Selesai",
+            cancelButtonText: "Batal",
+            customClass: {
+                confirmButton: "btn btn-primary me-2 waves-effect waves-light",
+                cancelButton: "btn btn-danger waves-effect",
+            },
+        }).then(function(result) {
+            if (result.isConfirmed) {
+                window.location.href = getLink;
+            }
+        });
+        return false;
     });
 </script>
