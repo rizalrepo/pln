@@ -255,6 +255,12 @@ if (!isset($_SESSION['login'])) {
                                                     <div>Data Perbaikan</div>
                                                 </a>
                                             </li>
+                                            <li class="menu-item <?= isActive($page, 'maintenance') ?>">
+                                                <a href="<?= base_url() ?>/view/admin/maintenance" class="menu-link">
+                                                    <i class="menu-icon tf-icons ri-tools-fill"></i>
+                                                    <div>Data Maintenance</div>
+                                                </a>
+                                            </li>
                                         </ul>
                                     </li>
                                     <!-- <li class="menu-header mt-1">
