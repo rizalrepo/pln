@@ -3,8 +3,6 @@ include_once '../../app/config.php';
 $page = 'dashboard';
 include_once '../layouts/header.php';
 
-// $a = $con->query("SELECT COUNT(*) AS total FROM pelanggan")->fetch_array();
-
 $b = $con->query("SELECT COUNT(*) AS total FROM pemasangan")->fetch_array();
 $b1 = $con->query("SELECT COUNT(*) AS total FROM pemasangan WHERE verif = 0")->fetch_array();
 $b2 = $con->query("SELECT COUNT(*) AS total FROM pemasangan WHERE verif = 2")->fetch_array();
@@ -24,99 +22,82 @@ $e1 = $con->query("SELECT COUNT(*) AS total FROM kerusakan WHERE verif = 0")->fe
 $e2 = $con->query("SELECT COUNT(*) AS total FROM kerusakan WHERE verif = 2")->fetch_array();
 $e3 = $con->query("SELECT COUNT(*) AS total FROM kerusakan WHERE verif = 1")->fetch_array();
 
+$categories = [
+    ['title' => 'Pemasangan Baru', 'icon' => 'ri-plug-line', 'data' => $b, 'waiting' => $b1, 'rejected' => $b2, 'approved' => $b3],
+    ['title' => 'Ubah Daya', 'icon' => 'ri-speed-up-line', 'data' => $c, 'waiting' => $c1, 'rejected' => $c2, 'approved' => $c3],
+    ['title' => 'Pengaduan', 'icon' => 'ri-chat-follow-up-fill', 'data' => $d, 'waiting' => $d1, 'responded' => $d2],
+    ['title' => 'Laporan Kerusakan', 'icon' => 'ri-alarm-warning-line', 'data' => $e, 'waiting' => $e1, 'rejected' => $e2, 'approved' => $e3],
+];
 ?>
 
 <!-- Content -->
 <div class="container-xxl flex-grow-1 container-p-y">
-    <!-- Card Border Shadow -->
-    <div class="row g-6">
-        <div class="col-12">
-            <div class="card card-border-shadow-info">
-                <div class="card-body">
-                    <div class="d-flex align-items-center gap-4 me-6 me-sm-0">
-                        <div class="avatar avatar-lg">
-                            <span class="avatar-initial rounded-3 bg-label-info"><i class="ri-plug-line ri-24px"></i></span>
+    <div class="row g-4">
+        <?php foreach ($categories as $category) : ?>
+            <div class="col-12 col-lg-6">
+                <div class="card h-100">
+                    <div class="card-body d-flex align-items-center justify-content-between">
+                        <div class="flex-grow-1 me-3">
+                            <h5 class="card-title mb-1"><?= $category['title'] ?></h5>
+                            <p class="mb-2 fw-semibold"><?= $category['data']['total'] ?> Total Data</p>
+                            <div class="d-flex flex-wrap gap-1">
+                                <?php if (isset($category['waiting'])) : ?>
+                                    <span class="badge bg-label-warning"><?= $category['waiting']['total'] ?> Menunggu</span>
+                                <?php endif; ?>
+                                <?php if (isset($category['rejected'])) : ?>
+                                    <span class="badge bg-label-danger"><?= $category['rejected']['total'] ?> Ditolak</span>
+                                <?php endif; ?>
+                                <?php if (isset($category['approved'])) : ?>
+                                    <span class="badge bg-label-success"><?= $category['approved']['total'] ?> Disetujui</span>
+                                <?php endif; ?>
+                                <?php if (isset($category['responded'])) : ?>
+                                    <span class="badge bg-label-info"><?= $category['responded']['total'] ?> Ditanggapi</span>
+                                <?php endif; ?>
+                            </div>
                         </div>
-                        <div class="content-right">
-                            <p class="mb-1 fw-medium">Pemasangan Baru</p>
-                            <span class="text-info mb-0 h6"><?= $b['total'] ?> Total Data</span>
-                            <span class="mx-2"> | </span>
-                            <span class="text-warning mb-0 h6"><?= $b1['total'] ?> Data Menunggu Verifikasi</span>
-                            <span class="mx-2"> | </span>
-                            <span class="text-danger mb-0 h6"><?= $b2['total'] ?> Data Ditolak</span>
-                            <span class="mx-2"> | </span>
-                            <span class="text-success mb-0 h6"><?= $b3['total'] ?> Data Disetujui</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-12">
-            <div class="card card-border-shadow-info">
-                <div class="card-body">
-                    <div class="d-flex align-items-center gap-4 me-6 me-sm-0">
-                        <div class="avatar avatar-lg">
-                            <span class="avatar-initial rounded-3 bg-label-info"><i class="ri-speed-up-line ri-24px"></i></span>
-                        </div>
-                        <div class="content-right">
-                            <p class="mb-1 fw-medium">Ubah Daya</p>
-                            <span class="text-info mb-0 h6"><?= $c['total'] ?> Total Data</span>
-                            <span class="mx-2"> | </span>
-                            <span class="text-warning mb-0 h6"><?= $c1['total'] ?> Data Menunggu Verifikasi</span>
-                            <span class="mx-2"> | </span>
-                            <span class="text-danger mb-0 h6"><?= $c2['total'] ?> Data Ditolak</span>
-                            <span class="mx-2"> | </span>
-                            <span class="text-success mb-0 h6"><?= $c3['total'] ?> Data Disetujui</span>
+                        <div class="flex-shrink-0">
+                            <div class="avatar avatar-xl">
+                                <span class="avatar-initial rounded bg-label-primary">
+                                    <i class="<?= $category['icon'] ?> fs-3"></i>
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-12">
-            <div class="card card-border-shadow-info">
-                <div class="card-body">
-                    <div class="d-flex align-items-center gap-4 me-6 me-sm-0">
-                        <div class="avatar avatar-lg">
-                            <span class="avatar-initial rounded-3 bg-label-info"><i class="ri-chat-follow-up-fill ri-24px"></i></span>
-                        </div>
-                        <div class="content-right">
-                            <p class="mb-1 fw-medium">Pengaduan</p>
-                            <span class="text-info mb-0 h6"><?= $d['total'] ?> Total Data</span>
-                            <span class="mx-2"> | </span>
-                            <span class="text-warning mb-0 h6"><?= $d1['total'] ?> Data Belum Ditanggapi</span>
-                            <span class="mx-2"> | </span>
-                            <span class="text-success mb-0 h6"><?= $d2['total'] ?> Data Ditanggapi</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-12">
-            <div class="card card-border-shadow-info">
-                <div class="card-body">
-                    <div class="d-flex align-items-center gap-4 me-6 me-sm-0">
-                        <div class="avatar avatar-lg">
-                            <span class="avatar-initial rounded-3 bg-label-info"><i class="ri-alarm-warning-line ri-24px"></i></span>
-                        </div>
-                        <div class="content-right">
-                            <p class="mb-1 fw-medium">Laporan Kerusakan</p>
-                            <span class="text-info mb-0 h6"><?= $e['total'] ?> Total Data</span>
-                            <span class="mx-2"> | </span>
-                            <span class="text-warning mb-0 h6"><?= $e1['total'] ?> Data Menunggu Verifikasi</span>
-                            <span class="mx-2"> | </span>
-                            <span class="text-danger mb-0 h6"><?= $e2['total'] ?> Data Ditolak</span>
-                            <span class="mx-2"> | </span>
-                            <span class="text-success mb-0 h6"><?= $e3['total'] ?> Data Disetujui</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <?php endforeach; ?>
     </div>
-    <!--/ On route vehicles Table -->
 </div>
 <!-- / Content -->
 
 <?php
 include_once '../layouts/footer.php';
 ?>
+
+<style>
+    .card {
+        background-color: #2b2d3e;
+        border: none;
+    }
+
+    .avatar-xl {
+        width: 60px;
+        height: 60px;
+    }
+
+    .avatar-xl .avatar-initial {
+        font-size: 1.5rem;
+    }
+
+    .card-title {
+        color: #fff;
+    }
+
+    .badge {
+        font-size: 0.8rem;
+    }
+
+    .card-body {
+        padding: 1.5rem;
+    }
+</style>
