@@ -75,11 +75,6 @@ include_once '../layouts/footer.php';
 ?>
 
 <style>
-    .card {
-        background-color: #2b2d3e;
-        border: none;
-    }
-
     .avatar-xl {
         width: 60px;
         height: 60px;
@@ -87,10 +82,6 @@ include_once '../layouts/footer.php';
 
     .avatar-xl .avatar-initial {
         font-size: 1.5rem;
-    }
-
-    .card-title {
-        color: #fff;
     }
 
     .badge {
