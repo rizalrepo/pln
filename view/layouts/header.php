@@ -12,7 +12,7 @@ if (!isset($_SESSION['login'])) {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>Sistem Layanan Pelanggan dan Monitoring Penyelesaian Laporan Gangguan Kantor Pelayanan PLN Asam Asam</title>
+    <title>Layanan Pelanggan dan Monitoring Penyelesaian Laporan Gangguan Kantor Pelayanan PLN Asam Asam</title>
 
     <meta name="description" content="" />
 
