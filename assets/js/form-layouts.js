@@ -118,8 +118,27 @@ $(function () {
             var $this = $(this);
             select2Focus($this);
             $this.wrap('<div class="position-relative"></div>').select2({
-                placeholder: "-- pilih --",
                 dropdownParent: $this.parent(),
+                placeholder: null, // Hapus placeholder default
+                allowClear: false, // Nonaktifkan allowClear
+                templateResult: function (data) {
+                    // Fungsi ini akan dipanggil untuk setiap opsi
+                    if (data.id === "") {
+                        // Untuk opsi dengan value kosong
+                        return $("<span>" + data.text + "</span>");
+                    }
+                    // Untuk opsi lainnya
+                    return data.text;
+                },
+                templateSelection: function (data) {
+                    // Fungsi ini akan dipanggil untuk opsi yang terpilih
+                    if (data.id === "") {
+                        // Untuk opsi dengan value kosong
+                        return $("<span>" + data.text + "</span>");
+                    }
+                    // Untuk opsi lainnya
+                    return data.text;
+                },
             });
         });
     }

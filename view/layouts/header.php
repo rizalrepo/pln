@@ -263,7 +263,7 @@ if (!isset($_SESSION['login'])) {
                                             </li>
                                         </ul>
                                     </li>
-                                    <!-- <li class="menu-header mt-1">
+                                    <li class="menu-header mt-1">
                                         <span class="menu-header-text">Laporan</span>
                                     </li>
                                     <li class="menu-item">
@@ -273,13 +273,55 @@ if (!isset($_SESSION['login'])) {
                                         </a>
                                         <ul class="menu-sub">
                                             <li class="menu-item">
-                                                <a href="#" class="menu-link" data-bs-toggle="modal" data-bs-target="#lapSample">
+                                                <a href="#" class="menu-link" data-bs-toggle="modal" data-bs-target="#lapPemasangan">
                                                     <i class="menu-icon tf-icons ri-file-text-line"></i>
-                                                    <div>Laporan Sample</div>
+                                                    <div>Laporan Pemasangan Baru</div>
+                                                </a>
+                                            </li>
+                                            <li class="menu-item">
+                                                <a href="#" class="menu-link" data-bs-toggle="modal" data-bs-target="#lapUbahDaya">
+                                                    <i class="menu-icon tf-icons ri-file-text-line"></i>
+                                                    <div>Laporan Ubah Daya</div>
+                                                </a>
+                                            </li>
+                                            <li class="menu-item">
+                                                <a href="#" class="menu-link" data-bs-toggle="modal" data-bs-target="#lapPengaduan">
+                                                    <i class="menu-icon tf-icons ri-file-text-line"></i>
+                                                    <div>Laporan Pengaduan</div>
+                                                </a>
+                                            </li>
+                                            <li class="menu-item">
+                                                <a href="#" class="menu-link" data-bs-toggle="modal" data-bs-target="#lapKerusakan">
+                                                    <i class="menu-icon tf-icons ri-file-text-line"></i>
+                                                    <div>Laporan Kerusakan</div>
+                                                </a>
+                                            </li>
+                                            <li class="menu-item">
+                                                <a href="#" class="menu-link" data-bs-toggle="modal" data-bs-target="#lapPerbaikan">
+                                                    <i class="menu-icon tf-icons ri-file-text-line"></i>
+                                                    <div>Laporan Perbaikan</div>
+                                                </a>
+                                            </li>
+                                            <li class="menu-item">
+                                                <a href="#" class="menu-link" data-bs-toggle="modal" data-bs-target="#lapMaintenance">
+                                                    <i class="menu-icon tf-icons ri-file-text-line"></i>
+                                                    <div>Laporan Maintenance</div>
+                                                </a>
+                                            </li>
+                                            <li class="menu-item">
+                                                <a href="<?= base_url('view/laporan/daya') ?>" target="_blank" class="menu-link">
+                                                    <i class="menu-icon tf-icons ri-file-text-line"></i>
+                                                    <div>Rekapitulasi Daya Listrik Terpasang</div>
+                                                </a>
+                                            </li>
+                                            <li class="menu-item">
+                                                <a href="<?= base_url('view/laporan/up3') ?>" target="_blank" class="menu-link">
+                                                    <i class="menu-icon tf-icons ri-file-text-line"></i>
+                                                    <div>Rekapitulasi Aktivitas UP3</div>
                                                 </a>
                                             </li>
                                         </ul>
-                                    </li> -->
+                                    </li>
                                 <?php } else if ($_SESSION['level'] == 2) { ?>
                                     <li class="menu-item <?= isActive($page, 'dashboard') ?>">
                                         <a href="<?= base_url() ?>/view/pelanggan" class="menu-link">
@@ -317,6 +359,65 @@ if (!isset($_SESSION['login'])) {
                                             <i class="menu-icon tf-icons ri-home-smile-line"></i>
                                             <div>Dashboard</div>
                                         </a>
+                                    </li>
+                                    <li class="menu-header mt-1">
+                                        <span class="menu-header-text">Laporan</span>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                                            <i class="menu-icon tf-icons ri-printer-fill"></i>
+                                            <div>Cetak Laporan</div>
+                                        </a>
+                                        <ul class="menu-sub">
+                                            <li class="menu-item">
+                                                <a href="#" class="menu-link" data-bs-toggle="modal" data-bs-target="#lapPemasangan">
+                                                    <i class="menu-icon tf-icons ri-file-text-line"></i>
+                                                    <div>Laporan Pemasangan Baru</div>
+                                                </a>
+                                            </li>
+                                            <li class="menu-item">
+                                                <a href="#" class="menu-link" data-bs-toggle="modal" data-bs-target="#lapUbahDaya">
+                                                    <i class="menu-icon tf-icons ri-file-text-line"></i>
+                                                    <div>Laporan Ubah Daya</div>
+                                                </a>
+                                            </li>
+                                            <li class="menu-item">
+                                                <a href="#" class="menu-link" data-bs-toggle="modal" data-bs-target="#lapPengaduan">
+                                                    <i class="menu-icon tf-icons ri-file-text-line"></i>
+                                                    <div>Laporan Pengaduan</div>
+                                                </a>
+                                            </li>
+                                            <li class="menu-item">
+                                                <a href="#" class="menu-link" data-bs-toggle="modal" data-bs-target="#lapKerusakan">
+                                                    <i class="menu-icon tf-icons ri-file-text-line"></i>
+                                                    <div>Laporan Kerusakan</div>
+                                                </a>
+                                            </li>
+                                            <li class="menu-item">
+                                                <a href="#" class="menu-link" data-bs-toggle="modal" data-bs-target="#lapPerbaikan">
+                                                    <i class="menu-icon tf-icons ri-file-text-line"></i>
+                                                    <div>Laporan Perbaikan</div>
+                                                </a>
+                                            </li>
+                                            <li class="menu-item">
+                                                <a href="#" class="menu-link" data-bs-toggle="modal" data-bs-target="#lapMaintenance">
+                                                    <i class="menu-icon tf-icons ri-file-text-line"></i>
+                                                    <div>Laporan Maintenance</div>
+                                                </a>
+                                            </li>
+                                            <li class="menu-item">
+                                                <a href="<?= base_url('view/laporan/daya') ?>" target="_blank" class="menu-link">
+                                                    <i class="menu-icon tf-icons ri-file-text-line"></i>
+                                                    <div>Rekapitulasi Daya Listrik Terpasang</div>
+                                                </a>
+                                            </li>
+                                            <li class="menu-item">
+                                                <a href="<?= base_url('view/laporan/up3') ?>" target="_blank" class="menu-link">
+                                                    <i class="menu-icon tf-icons ri-file-text-line"></i>
+                                                    <div>Rekapitulasi Aktivitas UP3</div>
+                                                </a>
+                                            </li>
+                                        </ul>
                                     </li>
                                 <?php } ?>
                             </ul>

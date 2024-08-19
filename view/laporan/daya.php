@@ -2,20 +2,16 @@
 include '../../app/config.php';
 
 $no = 1;
-$user = $_GET['user'];
-$cekuser = isset($user);
 
-if ($user == $cekuser) {
-    $sql = $con->query("SELECT * FROM user WHERE id_user = '$user' ORDER BY nm_user ASC");
-    $dt = $con->query("SELECT * FROM user WHERE id_user = '$user'")->fetch_array();
-    $label = 'LAPORAN USER <br> Nama : ' . $dt['nm_user'];
-} else {
-    $sql = $con->query("SELECT * FROM user ORDER BY nm_user ASC");
-    $label = 'LAPORAN USER';
-}
+$query = "SELECT * FROM v_rekap_daya_pelanggan WHERE jumlah_pemasangan != 0";
+// Eksekusi query
+$sql = $con->query($query);
+
+// Menyusun label
+$label = 'REKAPITULASI DAYA LISTRIK TERPASANG';
 
 require_once '../../assets/vendor/libs/mpdf/autoload.php';
-$mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => [380, 215]]);
+$mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4-L']);
 ob_start();
 ?>
 
@@ -23,7 +19,7 @@ ob_start();
 <html>
 
 <head>
-    <title>Laporan User</title>
+    <title>REKAPITULASI DAYA LISTRIK TERPASANG</title>
 </head>
 
 <style>
@@ -37,15 +33,15 @@ ob_start();
         <table border="0" cellspacing="0" cellpadding="0" width="100%">
             <tr>
                 <td align="center">
-                    <img src="<?= base_url('assets/img/logo.png') ?>" align="left" height="100">
+                    <img src="<?= base_url('assets/img/logo.png') ?>" align="left" height="80">
                 </td>
                 <td align="center">
-                    <h1>Aplikasi</h1>
-                    <h3>Aplikasi</h3>
-                    <h6>Alamat</h6>
+                    <h1>PT PLN (Persero)</h1>
+                    <h3>KANTOR PELAYANAN PLN ASAM ASAM</h3>
+                    <h6>Desa Asam Asam, Kecamatan Jorong, Kabupaten Tanah Laut Provinsi Kalimantan Selatan Kodepos 70881</h6>
                 </td>
                 <td align="center">
-                    <img src="<?= base_url('assets/img/pelengkap.png') ?>" align="right" height="100">
+                    <img src="<?= base_url('assets/img/pelengkap.png') ?>" align="right" height="80">
                 </td>
             </tr>
         </table>
@@ -61,20 +57,27 @@ ob_start();
                 <table border="1" cellspacing="0" cellpadding="6" width="100%">
                     <thead>
                         <tr bgcolor="#666CFF" align="center">
-                            <th>No</th>
-                            <th>Nama</th>
+                            <th width="5%">No</th>
+                            <th>Jenis Daya</th>
+                            <th>Golongan</th>
+                            <th>Jumlah Daya</th>
+                            <th>Jumlah Terpasang</th>
                         </tr>
                     </thead>
-
                     <tbody>
-                        <?php while ($data = $sql->fetch_array()) { ?>
+                        <?php
+                        $no = 1;
+                        foreach ($sql as $row) :
+                        ?>
                             <tr>
-                                <td align="center" width="5%"><?= $no++; ?></td>
-                                <td><?= $data['nm_user']; ?></td>
+                                <td align="center"><?= $no++; ?></td>
+                                <td><?= $row['jenis_daya'] ?></td>
+                                <td align="center"><?= $row['golongan'] ?></td>
+                                <td align="center"><?= $row['jml_daya'] ?></td>
+                                <td align="center"><?= $row['jumlah_pemasangan'] ?> Data</td>
                             </tr>
-                        <?php } ?>
+                        <?php endforeach; ?>
                     </tbody>
-
                 </table>
             </div>
         </div>
@@ -91,10 +94,10 @@ ob_start();
                 <td align="center">
                     <h6>
                         <?= tgl_indo(date('Y-m-d')) ?><br>
-                        Mengetahui <br>
-                        Nama
-                        <br><br><br><br><br>
-                        ______________________<br>
+                        Mengetahui, <br>
+                        Direktur Pelayanan <br> PLN Asam Asam
+                        <br><br><br><br><br><br>
+                        ________________________________<br>
                         <br>
                     </h6>
                 </td>

@@ -63,7 +63,7 @@ $cek = $con->query("SELECT status_kerusakan FROM kerusakan WHERE id_kerusakan = 
                                 <td><?= nl2br($row['pesan_perbaikan']) ?></td>
                                 <td class="text-center">
                                     <?php if ($row['status_perbaikan'] == 1) { ?>
-                                        <span class="badge bg-success">Diperbaiki</span>
+                                        <span class="badge bg-success">Perbaikan Selesai</span>
                                     <?php } else { ?>
                                         <span class="badge bg-info">Proses Perbaikan</span>
                                     <?php } ?>

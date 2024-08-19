@@ -61,7 +61,7 @@ if (isset($_GET['id'])) {
                                 ?>
                             </div>
                         <?php } else if ($d['verif_ubah_daya'] == 2) { ?>
-                            Pemasangan Baru ditolak karena <?= $d['ubah_daya_ditolak'] ?>
+                            Ubah Daya ditolak karena <?= $d['ubah_daya_ditolak'] ?>
                         <?php } else { ?>
                             <span class="badge bg-warning">Menunggu Verifikasi</span>
                         <?php } ?>
