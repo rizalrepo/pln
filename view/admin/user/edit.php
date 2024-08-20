@@ -10,6 +10,9 @@ $level = [
     '1' => 'Admin',
     '3' => 'Direktur',
 ];
+
+$oldLevel = $row['level'];
+$oldPassword = $row['password'];
 ?>
 
 <!-- Content -->
@@ -88,8 +91,8 @@ include_once '../../layouts/footer.php';
 if (isset($_POST['submit'])) {
     $nm_user = $_POST['nm_user'];
     $username = $_POST['username'];
-    $pw = !empty($_POST['password']) ? md5($_POST['password']) : $row['password'];
-    $level = !empty($_POST['level']) ? $_POST['level'] : $row['password'];
+    $pw = $_POST['password'] ? md5($_POST['password']) : $oldPassword;
+    $level = $_POST['level'] ? $_POST['level'] : $oldLevel;
 
     $update = $con->query("UPDATE user SET 
         nm_user = '$nm_user', 

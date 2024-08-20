@@ -128,7 +128,7 @@ if (!isset($_SESSION['login'])) {
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
                                     <li>
-                                        <a class="dropdown-item" href="pages-account-settings-account.html">
+                                        <a class="dropdown-item" href="#">
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 me-2">
                                                     <i class="ri-shield-user-fill ri-40px"></i>

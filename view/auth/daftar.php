@@ -360,7 +360,7 @@ $post_data = get_form_data();
                     '$nm_pelanggan',
                     '$nik_pelanggan',
                     '$pw',
-                    3
+                    2
                 )");
                 echo "
                 <script type='text/javascript'>

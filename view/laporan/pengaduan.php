@@ -70,7 +70,7 @@ ob_start();
         <table border="0" cellspacing="0" cellpadding="0" width="100%">
             <tr>
                 <td align="center">
-                    <img src="<?= base_url('assets/img/logo.png') ?>" align="left" height="80">
+                    <img src="<?= base_url('assets/img/logo.jpg') ?>" align="left" height="80">
                 </td>
                 <td align="center">
                     <h1>PT PLN (Persero)</h1>
@@ -78,7 +78,7 @@ ob_start();
                     <h6>Desa Asam Asam, Kecamatan Jorong, Kabupaten Tanah Laut Provinsi Kalimantan Selatan Kodepos 70881</h6>
                 </td>
                 <td align="center">
-                    <img src="<?= base_url('assets/img/pelengkap.png') ?>" align="right" height="80">
+                    <img src="<?= base_url('assets/img/pelengkap.jpg') ?>" align="right" height="80">
                 </td>
             </tr>
         </table>
