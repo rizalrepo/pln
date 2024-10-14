@@ -34,6 +34,8 @@ if (isset($_GET['id'])) {
                     <dd class="col-sm-10"><span class="mx-2">:</span><?= $d['golongan'] . ' | ' . $d['jenis_daya'] . ' - ' . $d['jml_daya'] ?></dd>
                     <dt class="col-sm-2">Biaya Ubah Daya</dt>
                     <dd class="col-sm-10"><span class="mx-2">:</span><?= rupiah($d['biaya_ubah_daya']) ?></dd>
+                    <dt class="col-sm-2">Bukti Pembayaran</dt>
+                    <dd class="col-sm-10"><span class="mx-2">:</span><a href="<?= base_url('storage/pembayaran/' . $d['bukti_pembayaran']) ?>" class="btn btn-sm btn-success p-1 me-2" target="_blank"><i class="ri-receipt-line me-1"></i>Lihat Bukti Pembayaran</a></dd>
                     <dt class="col-sm-2">Waktu Pengajuan</dt>
                     <dd class="col-sm-10"><span class="mx-2">:</span><?= tglWaktu($d['waktu_pengajuan_ubah_daya']) ?></dd>
                     <dt class="col-sm-2">Status Verifikasi</dt>

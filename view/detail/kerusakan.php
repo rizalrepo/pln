@@ -8,8 +8,10 @@ if (isset($_GET['id'])) {
     $d = $q->fetch_array();
 
     $perbaikan = $con->query("SELECT * FROM perbaikan WHERE id_kerusakan = '$id' ORDER BY tgl_mulai_perbaikan DESC");
-
     $checkperbaikan = $perbaikan->fetch_array();
+
+    $ganti = $con->query("SELECT * FROM barang_keluar a LEFT JOIN barang b ON a.id_barang = b.id_barang WHERE a.id_kerusakan = '$id' ORDER BY a.id_barang_keluar DESC");
+    $checkganti = $ganti->fetch_array();
 ?>
     <div class="row">
         <div class="col-md-12">
@@ -97,6 +99,34 @@ if (isset($_GET['id'])) {
                             </div>
                         </div>
                     <?php endforeach ?>
+                <?php endif ?>
+                <?php if ($checkganti): ?>
+                    <hr class="mt-1 mb-5">
+                    <h6>History Pergantian Barang</h6>
+
+                    <div class="table-responsive text-nowrap">
+                        <table id="tbl" class="table table-hover table-striped nowrap" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Nama Barang</th>
+                                    <th>Jumlah</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $no2 = 1;
+                                foreach ($ganti as $row2) {
+                                ?>
+                                    <tr>
+                                        <td class="text-center" width="5%"><?= $no2++ ?></td>
+                                        <td><?= $row2['nm_barang'] ?></td>
+                                        <td class="text-center"><?= $row2['jumlah'] . ' ' . $row2['satuan'] ?></td>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+                        </table>
+                    </div>
                 <?php endif ?>
             </div>
         </div>

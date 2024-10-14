@@ -72,6 +72,7 @@ include_once '../../layouts/header.php';
                                 </td>
                                 <td align="center" width="14%">
                                     <a href="edit?id=<?= $row[0] ?>" class="btn text-white btn-info btn-xs" title="Edit"><i class="ri-edit-2-line me-2"></i>Edit</a>
+                                    <a href="ganti?id=<?= $row[0] ?>" class="btn text-white btn-warning btn-xs" title="Ganti Alat"><i class="ri-tools-line me-2"></i>Ganti Barang</a>
                                     <a href="hapus?id=<?= $row[0] ?>" class="btn btn-danger btn-xs confirm-hapus" title="Hapus"><i class="ri-delete-bin-line me-2"></i> Hapus</a>
                                 </td>
                             </tr>

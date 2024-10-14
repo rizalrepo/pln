@@ -4,8 +4,6 @@ $page = 'perbaikan';
 include_once '../../layouts/header.php';
 
 $id = $_GET['id'];
-
-$cek = $con->query("SELECT status_kerusakan FROM kerusakan WHERE id_kerusakan = '$id' ")->fetch_array();
 ?>
 
 <!-- Content -->
@@ -13,17 +11,15 @@ $cek = $con->query("SELECT status_kerusakan FROM kerusakan WHERE id_kerusakan = 
     <div class="card">
         <div class="justify-content-between d-flex align-items-center">
             <h5 class="card-header">
-                <i class="menu-icon tf-icons ri-shield-check-line me-2"></i>Data Perbaikan
+                <i class="menu-icon tf-icons ri-shield-check-line me-2"></i>Data Perbaikan Pengaduan
             </h5>
             <div class="pe-5">
                 <span class="btn btn-primary btn-sm detail-btn" data-id="<?= $id; ?>" title="Detail">
-                    <i class="ri-information-line me-2"></i>Detail Kerusakan
+                    <i class="ri-information-line me-2"></i>Detail Pengaduan
                 </span>
-                <?php if ($cek['status_kerusakan'] == 0) : ?>
-                    <span class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#tambah-perbaikan">
-                        <i class="ri-add-circle-fill me-2"></i>Input Perbaikan
-                    </span>
-                <?php endif ?>
+                <span class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#tambah-perbaikan">
+                    <i class="ri-add-circle-fill me-2"></i>Input Perbaikan
+                </span>
                 <a href="index" class="btn btn-sm btn-secondary"><i class="ri-arrow-left-circle-line me-2"></i>Kembali</a>
             </div>
         </div>
@@ -45,31 +41,21 @@ $cek = $con->query("SELECT status_kerusakan FROM kerusakan WHERE id_kerusakan = 
                             <th>No.</th>
                             <th>Tanggal</th>
                             <th>Pesan Perbaikan</th>
-                            <th>Status Perbaikan</th>
                             <th>Petugas</th>
-                            <?php if ($cek['status_kerusakan'] == 0) : ?>
-                                <th>Aksi</th>
-                            <?php endif ?>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
                         $no = 1;
-                        $data = $con->query("SELECT * FROM perbaikan WHERE id_kerusakan = '$id' ORDER BY id_perbaikan DESC");
+                        $data = $con->query("SELECT * FROM perbaikan_pengaduan WHERE id_pengaduan = '$id' ORDER BY id_perbaikan_pengaduan DESC");
                         while ($row = $data->fetch_array()) { ?>
                             <tr>
                                 <td class="text-center" width="5%"><?= $no++ ?></td>
                                 <td class="text-center"><?= $row['tgl_mulai_perbaikan'] !== $row['tgl_selesai_perbaikan'] ? tgl($row['tgl_mulai_perbaikan']) . ' - ' . tgl($row['tgl_selesai_perbaikan']) : tgl($row['tgl_mulai_perbaikan']) ?></td>
                                 <td><?= nl2br($row['pesan_perbaikan']) ?></td>
-                                <td class="text-center">
-                                    <?php if ($row['status_perbaikan'] == 1) { ?>
-                                        <span class="badge bg-success">Perbaikan Selesai</span>
-                                    <?php } else { ?>
-                                        <span class="badge bg-info">Proses Perbaikan</span>
-                                    <?php } ?>
-                                </td>
                                 <td>
-                                    <?php $dataPetugas = $con->query("SELECT * FROM perbaikan_up3 a LEFT JOIN up3 b ON a.id_up3 = b.id_up3 WHERE a.id_perbaikan = '$row[id_perbaikan]' "); ?>
+                                    <?php $dataPetugas = $con->query("SELECT * FROM perbaikan_pengaduan_up3 a LEFT JOIN up3 b ON a.id_up3 = b.id_up3 WHERE a.id_perbaikan_pengaduan = '$row[id_perbaikan_pengaduan]' "); ?>
                                     <?php
                                     $no2 = 1;
                                     while ($d2 = $dataPetugas->fetch_assoc()) {
@@ -79,11 +65,9 @@ $cek = $con->query("SELECT status_kerusakan FROM kerusakan WHERE id_kerusakan = 
                                     }
                                     ?>
                                 </td>
-                                <?php if ($cek['status_kerusakan'] == 0) : ?>
-                                    <td align="center" width="10%">
-                                        <a href="hapus?id=<?= $row[0] ?>&ids=<?= $id ?>" class="btn btn-danger btn-xs confirm-hapus" title="Hapus"><i class="ri-delete-bin-line me-2"></i> Hapus</a>
-                                    </td>
-                                <?php endif ?>
+                                <td align="center">
+                                    <a href="hapus?id=<?= $row[0] ?>&ids=<?= $id ?>" class="btn btn-danger btn-xs confirm-hapus" title="Hapus"><i class="ri-delete-bin-line me-2"></i> Hapus</a>
+                                </td>
                             </tr>
                         <?php } ?>
                     </tbody>
@@ -98,7 +82,7 @@ $cek = $con->query("SELECT status_kerusakan FROM kerusakan WHERE id_kerusakan = 
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title"><i class="ri-information-line me-2"></i>Detail Data Laporan Kerusakan</h5>
+                <h5 class="modal-title"><i class="ri-information-line me-2"></i>Detail Data Laporan Pengaduan</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" id="modalContent">
@@ -112,7 +96,7 @@ $cek = $con->query("SELECT status_kerusakan FROM kerusakan WHERE id_kerusakan = 
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title"><i class="ri-add-circle-fill me-2"></i>Input Perbaikan</h5>
+                <h5 class="modal-title"><i class="ri-add-circle-fill me-2"></i>Input Perbaikan Pengaduan</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -172,13 +156,12 @@ if (isset($_POST['tambah'])) {
     $tgl_selesai_perbaikan = $_POST['tgl_selesai_perbaikan'];
     $pesan_perbaikan = $_POST['pesan_perbaikan'];
 
-    $tambah = $con->query("INSERT INTO perbaikan VALUES (
+    $tambah = $con->query("INSERT INTO perbaikan_pengaduan VALUES (
         default,
         '$id',
         '$tgl_mulai_perbaikan', 
         '$tgl_selesai_perbaikan',
-        '$pesan_perbaikan',
-        0
+        '$pesan_perbaikan'
     )");
 
     if ($tambah) {
@@ -193,7 +176,7 @@ if (isset($_POST['tambah'])) {
                 $values[] = "('$id_perbaikan', '$id_up3')";
             }
 
-            $sql = "INSERT INTO perbaikan_up3 (id_perbaikan, id_up3) VALUES " . implode(", ", $values);
+            $sql = "INSERT INTO perbaikan_pengaduan_up3 (id_perbaikan_pengaduan, id_up3) VALUES " . implode(", ", $values);
 
             if ($con->query($sql)) {
                 echo "Data berhasil disimpan";
@@ -205,10 +188,10 @@ if (isset($_POST['tambah'])) {
         }
 
         $_SESSION['pesan'] = "Data Berhasil di Simpan";
-        echo "<meta http-equiv='refresh' content='0; url=proses?id=$id'>";
+        echo "<meta http-equiv='refresh' content='0; url=perbaikan?id=$id'>";
     } else {
         $_SESSION['pesan'] = "Data anda gagal disimpan. Ulangi sekali lagi";
-        echo "<meta http-equiv='refresh' content='0; url=proses?id=$id'>";
+        echo "<meta http-equiv='refresh' content='0; url=perbaikan?id=$id'>";
     }
 }
 ?>
@@ -228,7 +211,7 @@ if (isset($_POST['tambah'])) {
             }
 
             $.ajax({
-                url: '../../detail/kerusakan.php',
+                url: '../../detail/pengaduan.php',
                 type: 'GET',
                 data: {
                     id: id

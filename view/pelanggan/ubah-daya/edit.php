@@ -6,6 +6,8 @@ include_once '../../layouts/header.php';
 $id = $_GET['id'];
 $row = $con->query("SELECT * FROM ubah_daya a LEFT JOIN daya b ON a.id_daya = b.id_daya WHERE a.id_ubah_daya = '$id'")->fetch_array();
 $old = $con->query("SELECT * FROM ubah_daya a LEFT JOIN daya b ON a.id_daya_lama = b.id_daya LEFT JOIN pemasangan c ON a.id_pemasangan = c.id_pemasangan WHERE a.id_ubah_daya = '$id'")->fetch_array();
+
+$file_lama = $row['bukti_pembayaran'];
 ?>
 
 <!-- Content -->
@@ -78,6 +80,14 @@ $old = $con->query("SELECT * FROM ubah_daya a LEFT JOIN daya b ON a.id_daya_lama
                         <input type="text" class="form-control bg-light" id="biaya_ubah_daya" value="<?= rupiah($row['biaya_ubah_daya']) ?>" readonly>
                     </div>
                 </div>
+                <div class="row mb-4">
+                    <label class="col-sm-2 col-form-label">Bukti Pembayaran</label>
+                    <div class="col-sm-10">
+                        <input type="file" name="bukti_pembayaran" class="form-control" accept="image/*">
+                        <div class="invalid-feedback">Kolom tidak boleh kosong !</div>
+                        <small class="text-white fw-bold badge bg-primary">Hanya file gambar yang diizinkan (JPG, JPEG, PNG, GIF). Maksimum 2MB. kosongkan jika tidak ingin mengedit data</small>
+                    </div>
+                </div>
                 <div class="pt-2">
                     <div class="row justify-content-end">
                         <div class="col-sm-9 text-end">
@@ -99,8 +109,58 @@ if (isset($_POST['submit'])) {
     $id_daya = $_POST['id_daya'];
     $waktu_pengajuan = date('Y-m-d H:i:s');
 
+    $f_bukti_pembayaran = "";
+    if (!empty($_FILES['bukti_pembayaran']['name'])) {
+        // UPLOAD FILE 
+        $file      = $_FILES['bukti_pembayaran']['name'];
+        $x_file    = explode('.', $file);
+        $ext_file  = end($x_file);
+        $bukti_pembayaran = rand(1000000, 9999999) . '.' . $ext_file;
+        $size_file = $_FILES['bukti_pembayaran']['size'];
+        $tmp_file  = $_FILES['bukti_pembayaran']['tmp_name'];
+        $dir_file  = '../../../storage/pembayaran/';
+        $allow_ext        = array('jpg', 'JPG', 'png', 'PNG', 'jpeg', 'JPEG', 'gif', 'GIF');
+        $allow_size       = 2097152; // 2 MB
+
+        if (in_array($ext_file, $allow_ext) === true) {
+            if ($size_file <= $allow_size) {
+                // Hapus file lama jika ada
+                if (!empty($file_lama) && file_exists($dir_file . $file_lama)) {
+                    unlink($dir_file . $file_lama);
+                }
+                move_uploaded_file($tmp_file, $dir_file . $bukti_pembayaran);
+                $f_bukti_pembayaran .= "Upload Success";
+            } else {
+                echo "
+                <script type='text/javascript'>
+                    Swal.fire({
+                        text:  'Ukuran File Terlalu Besar, Maksimal 2 Mb',
+                        icon: 'error',
+                        timer: 3000,
+                        showConfirmButton: false
+                    }); 
+                </script>";
+                return;
+            }
+        } else {
+            echo "
+            <script type='text/javascript'>
+                Swal.fire({
+                    text:  'Format File Tidak Didukung. File Harus Berupa Gambar',
+                    icon: 'error',
+                    timer: 3000,
+                    showConfirmButton: false
+                }); 
+            </script>";
+            return;
+        }
+    } else {
+        $bukti_pembayaran = $file_lama; // Gunakan file KTP yang sudah ada
+    }
+
     $update = $con->query("UPDATE ubah_daya SET
         id_daya = '$id_daya',
+        bukti_pembayaran = '$bukti_pembayaran',
         waktu_pengajuan_ubah_daya = '$waktu_pengajuan'
         WHERE id_ubah_daya = '$id'
     ");

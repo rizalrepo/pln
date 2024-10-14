@@ -66,6 +66,7 @@ include_once '../../layouts/header.php';
                                     <?php if ($row['status_kerusakan'] == 0 && $cek) : ?>
                                         <a href="selesai?id=<?= $row[0] ?>" class="btn btn-success btn-xs confirm-selesai" title="Selesai"><i class="ri-checkbox-circle-line me-2"></i>Perbaikan Selesai</a>
                                     <?php endif ?>
+                                    <a href="ganti?id=<?= $row[0] ?>" class="btn text-white btn-warning btn-xs" title="Ganti Alat"><i class="ri-tools-line me-2"></i>Ganti Barang</a>
                                 </td>
                             </tr>
                         <?php } ?>

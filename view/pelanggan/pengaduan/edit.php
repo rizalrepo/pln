@@ -69,7 +69,7 @@ $file_lama = $row['bukti_pengaduan'];
                     <div class="col-sm-10">
                         <input type="file" name="bukti_pengaduan" class="form-control" accept="image/*">
                         <div class="invalid-feedback">Kolom tidak boleh kosong !</div>
-                        <small class="text-white fw-bold badge bg-primary">Hanya file gambar yang diizinkan (JPG, JPEG, PNG, GIF). Maksimum 2MB. kosongkan jika tidak ingin mengedit KTP</small>
+                        <small class="text-white fw-bold badge bg-primary">Hanya file gambar yang diizinkan (JPG, JPEG, PNG, GIF). Maksimum 2MB. kosongkan jika tidak ingin mengedit data</small>
                     </div>
                 </div>
                 <div class="pt-2">

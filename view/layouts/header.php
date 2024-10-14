@@ -181,7 +181,7 @@ if (!isset($_SESSION['login'])) {
                                             <div>Dashboard</div>
                                         </a>
                                     </li>
-                                    <li class="menu-item <?= isOpenActive($page, ['user', 'daya', 'gardu', 'up3', 'pelanggan']) ?>">
+                                    <li class="menu-item <?= isOpenActive($page, ['user', 'daya', 'gardu', 'up3', 'pelanggan', 'barang']) ?>">
                                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                                             <i class="menu-icon tf-icons ri-database-line"></i>
                                             <div>Data Master</div>
@@ -215,6 +215,12 @@ if (!isset($_SESSION['login'])) {
                                                 <a href="<?= base_url() ?>/view/admin/pelanggan" class="menu-link">
                                                     <i class="menu-icon tf-icons ri-user-star-line"></i>
                                                     <div>Pelanggan</div>
+                                                </a>
+                                            </li>
+                                            <li class="menu-item <?= isActive($page, 'barang') ?>">
+                                                <a href="<?= base_url() ?>/view/admin/barang" class="menu-link">
+                                                    <i class="menu-icon tf-icons ri-stack-line"></i>
+                                                    <div>Barang</div>
                                                 </a>
                                             </li>
                                         </ul>

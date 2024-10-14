@@ -102,6 +102,14 @@ if ($max_id) {
                         <input type="text" class="form-control bg-light" id="biaya_ubah_daya" readonly>
                     </div>
                 </div>
+                <div class="row mb-4">
+                    <label class="col-sm-2 col-form-label">Upload Bukti Pembayaran</label>
+                    <div class="col-sm-10">
+                        <input type="file" name="bukti_pembayaran" class="form-control" accept="image/*" required>
+                        <div class="invalid-feedback">Kolom tidak boleh kosong !</div>
+                        <small class="text-white fw-bold badge bg-primary">Hanya file gambar yang diizinkan (JPG, JPEG, PNG, GIF). Maksimum 2MB.</small>
+                    </div>
+                </div>
                 <div class="pt-2">
                     <div class="row justify-content-end">
                         <div class="col-sm-9 text-end">
@@ -125,24 +133,82 @@ if (isset($_POST['submit'])) {
     $id_daya = $_POST['id_daya'];
     $waktu_pengajuan = date('Y-m-d H:i:s');
 
-    $tambah = $con->query("INSERT INTO ubah_daya VALUES (
-        default, 
-        '$newNumber',
-        '$id_pemasangan',
-        '$id_daya_lama',
-        '$id_daya',
-        '$waktu_pengajuan',
-        0,
-        default,
-        default
-    )");
+    $f_bukti_pembayaran = "";
+    if (!empty($_FILES['bukti_pembayaran']['name'])) {
+        // UPLOAD FILE 
+        $file      = $_FILES['bukti_pembayaran']['name'];
+        $x_file    = explode('.', $file);
+        $ext_file  = end($x_file);
+        $bukti_pembayaran = rand(1000000, 9999999) . '.' . $ext_file;
+        $size_file = $_FILES['bukti_pembayaran']['size'];
+        $tmp_file  = $_FILES['bukti_pembayaran']['tmp_name'];
+        $dir_file  = '../../../storage/pembayaran/';
+        $allow_ext        = array('jpg', 'JPG', 'png', 'PNG', 'jpeg', 'JPEG', 'gif', 'GIF');
+        $allow_size       = 2097152; // 2 MB
 
-    if ($tambah) {
-        $_SESSION['pesan'] = "Data Berhasil di Simpan";
-        echo "<meta http-equiv='refresh' content='0; url=index'>";
-        exit;
+        if (in_array($ext_file, $allow_ext) === true) {
+            if ($size_file <= $allow_size) {
+                move_uploaded_file($tmp_file, $dir_file . $bukti_pembayaran);
+                $f_bukti_pembayaran .= "Upload Success";
+            } else {
+                echo "
+                <script type='text/javascript'>
+                    Swal.fire({
+                        text:  'Ukuran File Terlalu Besar, Maksimal 2 Mb',
+                        icon: 'error',
+                        timer: 3000,
+                        showConfirmButton: false
+                    }); 
+                </script>";
+                return;
+            }
+        } else {
+            echo "
+            <script type='text/javascript'>
+                Swal.fire({
+                    text:  'Format File Tidak Didukung. File Harus Berupa Gambar',
+                    icon: 'error',
+                    timer: 3000,
+                    showConfirmButton: false
+                }); 
+            </script>";
+            return;
+        }
     } else {
-        $_SESSION['pesan'] = "Data anda gagal disimpan. Ulangi sekali lagi";
+        echo "
+        <script type='text/javascript'>
+            Swal.fire({
+                text:  'File KTP harus diupload',
+                icon: 'error',
+                timer: 3000,
+                showConfirmButton: false
+            }); 
+        </script>";
+        return;
+    }
+
+    if (!empty($f_bukti_pembayaran)) {
+
+        $tambah = $con->query("INSERT INTO ubah_daya VALUES (
+            default, 
+            '$newNumber',
+            '$id_pemasangan',
+            '$id_daya_lama',
+            '$id_daya',
+            '$bukti_pembayaran',
+            '$waktu_pengajuan',
+            0,
+            default,
+            default
+        )");
+
+        if ($tambah) {
+            $_SESSION['pesan'] = "Data Berhasil di Simpan";
+            echo "<meta http-equiv='refresh' content='0; url=index'>";
+            exit;
+        } else {
+            $_SESSION['pesan'] = "Data anda gagal disimpan. Ulangi sekali lagi";
+        }
     }
 }
 ?>

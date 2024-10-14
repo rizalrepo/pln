@@ -12,6 +12,10 @@ if (isset($_GET['id'])) {
     $tanggapan = $con->query("SELECT * FROM tanggapan WHERE id_pengaduan = '$id' ORDER BY waktu_tanggapan DESC");
 
     $checkTanggapan = $tanggapan->fetch_array();
+
+    $perbaikan = $con->query("SELECT * FROM perbaikan_pengaduan WHERE id_pengaduan = '$id' ORDER BY tgl_mulai_perbaikan DESC");
+
+    $checkperbaikan = $perbaikan->fetch_array();
 ?>
     <div class="row">
         <div class="col-md-12">
@@ -65,6 +69,34 @@ if (isset($_GET['id'])) {
                                     <a href="<?= base_url('storage/tanggapan/' . $tg['bukti_tanggapan']) ?>" class="btn btn-sm btn-success mt-2 p-1" target="_blank"><i class="ri-folder-user-line me-1"></i>Lihat Bukti Tanggapan</a>
                                 <?php endif ?>
                             </p>
+                        </div>
+                    <?php endforeach ?>
+                <?php endif ?>
+
+                <?php if ($checkperbaikan): ?>
+                    <hr class="mt-1 mb-5">
+                    <h6>History Perbaikan Pengaduan</h6>
+
+                    <?php foreach ($perbaikan as $tg): ?>
+
+                        <?php $dataPetugas = $con->query("SELECT * FROM perbaikan_pengaduan_up3 a LEFT JOIN up3 b ON a.id_up3 = b.id_up3 WHERE a.id_perbaikan_pengaduan = '$tg[id_perbaikan_pengaduan]' "); ?>
+
+                        <div class="alert bg-primary text-white mb-3" role="alert">
+                            <h6 class="alert-heading d-flex align-items-center"><span class="alert-icon bg-info rounded"><i class="ri-shield-check-line"></i></span><?= $tg['tgl_mulai_perbaikan'] !== $tg['tgl_selesai_perbaikan'] ? tgl($tg['tgl_mulai_perbaikan']) . ' - ' . tgl($tg['tgl_selesai_perbaikan']) : tgl($tg['tgl_mulai_perbaikan'])  ?></h6>
+                            <p class="my-1">
+                                <?= nl2br($tg['pesan_perbaikan']) ?>
+                            </p>
+                            Petugas Perbaikan : <br>
+                            <div class="mt-2">
+                                <?php
+                                $no2 = 1;
+                                while ($d2 = $dataPetugas->fetch_assoc()) {
+                                    echo '<span class="me-2 mt-1">' . $no2++ . '.</span>';
+                                    echo $d2['nm_up3'];
+                                    echo '<hr class="my-1">';
+                                }
+                                ?>
+                            </div>
                         </div>
                     <?php endforeach ?>
                 <?php endif ?>

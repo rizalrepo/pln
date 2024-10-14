@@ -66,6 +66,7 @@ include_once '../../layouts/header.php';
                                         <i class="ri-information-line me-2"></i>Detail
                                     </span>
                                     <a href="detail?id=<?= $row[0] ?>" class="btn text-white btn-success btn-xs"><i class="ri-edit-2-line me-2"></i>Tanggapan</a>
+                                    <a href="perbaikan?id=<?= $row[0] ?>" class="btn text-white btn-info btn-xs" title="Perbaikan"><i class="ri-shield-check-line me-2"></i>Perbaikan</a>
                                 </td>
                             </tr>
                         <?php } ?>
