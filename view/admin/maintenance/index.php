@@ -63,7 +63,7 @@ include_once '../../layouts/header.php';
                                     ?>
                                 </td>
                                 <td>
-                                    <div class="table-responsive text-nowrap">
+                                    <div class="table-responsive text-nowrap mt-2">
                                         <table id="tbl" class="table table-hover table-striped nowrap" style="width:100%">
                                             <thead>
                                                 <tr>
