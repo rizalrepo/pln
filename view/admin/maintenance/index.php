@@ -35,6 +35,7 @@ include_once '../../layouts/header.php';
                             <th>Tanggal</th>
                             <th>Deskripsi</th>
                             <th>UP3</th>
+                            <th>Pergantian Barang</th>
                             <th>Status</th>
                             <th>Aksi</th>
                         </tr>
@@ -60,6 +61,32 @@ include_once '../../layouts/header.php';
                                         echo '<hr class="my-1">';
                                     }
                                     ?>
+                                </td>
+                                <td>
+                                    <div class="table-responsive text-nowrap">
+                                        <table id="tbl" class="table table-hover table-striped nowrap" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>No.</th>
+                                                    <th>Nama Barang</th>
+                                                    <th>Jumlah</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                $no2 = 1;
+                                                $ganti = $con->query("SELECT * FROM barang_keluar a LEFT JOIN barang b ON a.id_barang = b.id_barang WHERE a.id_maintenance = '$row[0]' ORDER BY a.id_barang_keluar DESC");
+                                                foreach ($ganti as $row2) {
+                                                ?>
+                                                    <tr>
+                                                        <td class="text-center" width="5%"><?= $no2++ ?></td>
+                                                        <td><?= $row2['nm_barang'] ?></td>
+                                                        <td class="text-center"><?= $row2['jumlah'] . ' ' . $row2['satuan'] ?></td>
+                                                    </tr>
+                                                <?php } ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </td>
                                 <td class="text-center">
                                     <?php if ($row['tgl_mulai_maintenance'] > date('Y-m-d')) : ?>

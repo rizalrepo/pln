@@ -1,6 +1,6 @@
 <?php
 require '../../../app/config.php';
-$page = 'perbaikan';
+$page = 'maintenance';
 include_once '../../layouts/header.php';
 
 $id = $_GET['id'];
